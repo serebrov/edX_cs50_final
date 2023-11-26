@@ -28,14 +28,23 @@ LEVEL_DEFS = {
         --         ['y'] = 1,
         --     },
         -- },
+        --['map'] = [[
+        --  ---R
+        --  --D-
+        --  --R-
+        --]],
         ['map'] = [[
-          - -R RR--R-D--D
-          - D- -RDRR---R-
-          - R--R-DR--R-R-
-          --DD--R-R-RR-RE
-          --R-D-R----R---
-          --R-D-R  R -  R
-          --R-DD---R-- -R
+          ---R-RR--R-D--D-D----D
+          --D---RDRR---R----R-R-
+          --R--R-DR--R-R--R-R-R-
+          --DD--R-R-RR-RERR-R-RE
+          --R-D-R----R----R-----
+          --R-D-R--R -  R -    R
+          --R-DD---R-- -R-- - -R
+          --R-D-R  R -  R -    R
+          --R-DD---R-- -R-- - -R
+          --R-D-R  R -  R -    R
+          --R-DD---R-- -R-- - -R
         ]],
     },
     -- ['level2'] = LEVEL2,
