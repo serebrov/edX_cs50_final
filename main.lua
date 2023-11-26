@@ -1,6 +1,10 @@
 -- GD50 final project
 -- Boulder Clash
 
+if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
+    require("lldebugger").start()
+end
+
 require 'src/Dependencies'
 
 function love.load()

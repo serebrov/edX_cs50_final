@@ -8,7 +8,10 @@ push = require 'lib/push'
 Timer = require 'lib/knife.timer'
 
 require 'src/constants'
+require 'src/level_defs'
+
 require 'src/StateMachine'
+require 'src/Level'
 -- require 'src/Animation'
 -- require 'src/Entity'
 -- require 'src/entity_defs'
@@ -34,6 +37,9 @@ require 'src/states/GameStartState'
 gTextures = {
     -- ['tiles'] = love.graphics.newImage('graphics/tilesheet.png'),
     ['background'] = love.graphics.newImage('graphics/background.png'),
+    ['rock'] = love.graphics.newImage('graphics/rock.png'),
+    ['diamond'] = love.graphics.newImage('graphics/diamond.png'),
+    ['exit'] = love.graphics.newImage('graphics/exit.png'),
     -- ['character-walk'] = love.graphics.newImage('graphics/character_walk.png'),
     -- ['boulders'] = love.graphics.newImage('graphics/boulders.png'),
     -- ['diamonds'] = love.graphics.newImage('graphics/diamonds.png'),
