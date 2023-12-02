@@ -11,11 +11,11 @@ function GameStartState:update(dt)
 end
 
 function GameStartState:render()
-    love.graphics.draw(gTextures['background'], 0, 0, 0, 
-        VIRTUAL_WIDTH / gTextures['background']:getWidth(),
-        VIRTUAL_HEIGHT / gTextures['background']:getHeight())
+    love.graphics.draw(TEXTURES['background'], 0, 0, 0, 
+        VIRTUAL_WIDTH / TEXTURES['background']:getWidth(),
+        VIRTUAL_HEIGHT / TEXTURES['background']:getHeight())
 
-    love.graphics.setFont(gFonts['large'])
+    love.graphics.setFont(FONTS['large'])
 
     -- Draw the outline by drawing the text in black slightly offset multiple times
     love.graphics.setColor(0, 0, 0, 1) -- black color for the outline
@@ -36,7 +36,7 @@ function GameStartState:render()
     love.graphics.printf('Boulder Clash', 2, VIRTUAL_HEIGHT / 2 - 30, VIRTUAL_WIDTH, 'center')
 
     -- Draw the action prompt
-    love.graphics.setFont(gFonts['medium'])
+    love.graphics.setFont(FONTS['medium'])
     -- Neon green label color
     local labelColor = {0.2, 1, 0.2, 1}
 
@@ -48,15 +48,15 @@ function GameStartState:render()
     love.graphics.setColor(labelColor)
     love.graphics.printf('Press Enter', 0, VIRTUAL_HEIGHT / 2 + 64, VIRTUAL_WIDTH, 'center')
 
-    -- love.graphics.draw(gTextures['background'], 0, 0, 0, 
-    --     VIRTUAL_WIDTH / gTextures['background']:getWidth(),
-    --     VIRTUAL_HEIGHT / gTextures['background']:getHeight())
+    -- love.graphics.draw(TEXTURES['background'], 0, 0, 0, 
+    --     VIRTUAL_WIDTH / TEXTURES['background']:getWidth(),
+    --     VIRTUAL_HEIGHT / TEXTURES['background']:getHeight())
 
-    -- love.graphics.setFont(gFonts['large'])
+    -- love.graphics.setFont(FONTS['large'])
     -- love.graphics.setColor(34/255, 34/255, 34/255, 1)
     -- love.graphics.printf('Boulder Clash', 2, VIRTUAL_HEIGHT / 2 - 30, VIRTUAL_WIDTH, 'center')
 
     -- love.graphics.setColor(1, 1, 1, 1)
-    -- love.graphics.setFont(gFonts['small'])
+    -- love.graphics.setFont(FONTS['small'])
     -- love.graphics.printf('Press Enter', 0, VIRTUAL_HEIGHT / 2 + 64, VIRTUAL_WIDTH, 'center')
 end

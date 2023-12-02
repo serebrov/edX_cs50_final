@@ -34,7 +34,39 @@ require 'src/states/GameOverState'
 require 'src/states/GamePlayState'
 require 'src/states/GameStartState'
 
-gTextures = {
+--[[
+    Given an spritesheet and the frame width and  height, split the sheet
+    into a table of frames.
+]]
+function generate_frames(sheet, frame_width, frame_height)
+    local frames = {}
+
+    local sheet_width = sheet:getWidth()
+    local sheet_height = sheet:getHeight()
+
+    local x_frames = sheet_width / frame_width
+    local y_frames = sheet_height / frame_height
+
+    local frame_count = 1
+
+    for y = 0, y_frames - 1 do
+        for x = 0, x_frames - 1 do
+            frames[frame_count] = love.graphics.newQuad(
+                x * frame_width,
+                y * frame_height,
+                frame_width,
+                frame_height,
+                sheet_width,
+                sheet_height
+            )
+            frame_count = frame_count + 1
+        end
+    end
+
+    return frames
+end
+
+TEXTURES = {
     -- ['tiles'] = love.graphics.newImage('graphics/tilesheet.png'),
     ['background'] = love.graphics.newImage('graphics/background.png'),
     ['rock'] = love.graphics.newImage('graphics/rock.png'),
@@ -42,24 +74,21 @@ gTextures = {
     ['exit'] = love.graphics.newImage('graphics/exit.png'),
     ['wall'] = love.graphics.newImage('graphics/wall.png'),
     ['ground'] = love.graphics.newImage('graphics/ground.png'),
-    -- ['character-walk'] = love.graphics.newImage('graphics/character_walk.png'),
+    ['character-walk'] = love.graphics.newImage('graphics/character_walk.png'),
     -- ['boulders'] = love.graphics.newImage('graphics/boulders.png'),
     -- ['diamonds'] = love.graphics.newImage('graphics/diamonds.png'),
 }
 
-gFrames = {
-    -- ['tiles'] = GenerateQuads(gTextures['tiles'], 16, 16),
-    -- ['character-walk'] = GenerateQuads(gTextures['character-walk'], 16, 32),
-    -- ['boulders'] = GenerateQuads(gTextures['boulders'], 16, 16),
-    -- ['diamonds'] = GenerateQuads(gTextures['diamonds'], 16, 16),
+FRAMES = {
+    ['character-walk'] = generate_frames(TEXTURES['character-walk'], 16, 32)
 }
 
-gFonts = {
+FONTS = {
     ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
     ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),
     ['large'] = love.graphics.newFont('fonts/font.ttf', 32),
 }
 
-gSounds = {
+SOUNDS = {
     ['music'] = love.audio.newSource('sounds/music.mp3', 'static'),
 }

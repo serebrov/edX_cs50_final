@@ -58,12 +58,12 @@ end
 
 function Level:render()
     textureMap = {
-        ['R'] = gTextures['rock'],
-        ['D'] = gTextures['diamond'],
-        ['E'] = gTextures['exit'],
-        ['W'] = gTextures['wall'],
-        ['-'] = gTextures['ground'],
-        -- [' '] = gTextures['empty'], -- empty space, no texture
+        ['R'] = TEXTURES['rock'],
+        ['D'] = TEXTURES['diamond'],
+        ['E'] = TEXTURES['exit'],
+        ['W'] = TEXTURES['wall'],
+        ['-'] = TEXTURES['ground'],
+        -- [' '] = TEXTURES['empty'], -- empty space, no texture
     }
     -- Draw the map
     for y = 1, #self.map do

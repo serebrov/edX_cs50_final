@@ -11,15 +11,15 @@ function GameOverState:update(dt)
 end
 
 function GameOverState:render()
-    love.graphics.draw(gTextures['background'], 0, 0, 0, 
-        VIRTUAL_WIDTH / gTextures['background']:getWidth(),
-        VIRTUAL_HEIGHT / gTextures['background']:getHeight())
+    love.graphics.draw(TEXTURES['background'], 0, 0, 0, 
+        VIRTUAL_WIDTH / TEXTURES['background']:getWidth(),
+        VIRTUAL_HEIGHT / TEXTURES['background']:getHeight())
 
-    love.graphics.setFont(gFonts['large'])
+    love.graphics.setFont(FONTS['large'])
     love.graphics.setColor(34/255, 34/255, 34/255, 1)
     love.graphics.printf('Boulder Clash', 2, VIRTUAL_HEIGHT / 2 - 30, VIRTUAL_WIDTH, 'center')
 
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.setFont(gFonts['small'])
+    love.graphics.setFont(FONTS['small'])
     love.graphics.printf('Game Over', 0, VIRTUAL_HEIGHT / 2 + 64, VIRTUAL_WIDTH, 'center')
 end

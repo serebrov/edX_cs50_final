@@ -18,7 +18,7 @@ function love.load()
         resizable = true
     })
 
-    love.graphics.setFont(gFonts['small'])
+    love.graphics.setFont(FONTS['small'])
 
     gStateMachine = StateMachine {
         ['game-start'] = function() return GameStartState() end,
@@ -27,8 +27,8 @@ function love.load()
     }
     gStateMachine:change('game-start')
 
-    gSounds['music']:setLooping(true)
-    gSounds['music']:play()
+    SOUNDS['music']:setLooping(true)
+    SOUNDS['music']:play()
 
     love.keyboard.keysPressed = {}
 end
