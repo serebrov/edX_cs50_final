@@ -1,6 +1,7 @@
 Player = Class{__includes = Entity}
 
 function Player:init(def, level)
+    self.diamonds = 0
     def.x = 2 * TILE_SIZE
     def.y = 2 * TILE_SIZE
     Entity.init(self, def, level)

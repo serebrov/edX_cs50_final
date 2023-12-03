@@ -22,4 +22,11 @@ function GamePlayState:render()
     self.level:render()
     love.graphics.pop()
     self.player:render()
+
+    -- Show the number of diamonds collected
+    love.graphics.setFont(FONTS['small'])
+    love.graphics.setColor(1, 1, 1, 1)
+    -- TODO: diamond is not visible, need to find a font that has it
+    love.graphics.print('💎 ' .. self.player.diamonds, 10, VIRTUAL_HEIGHT - 10)
+
 end

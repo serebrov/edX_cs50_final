@@ -24,8 +24,15 @@ function PlayerWalkState:update(dt)
     EntityWalkState.update(self, dt)
 
     tile_current = self.level:tile_at(self.entity.x, self.entity.y)
+
     -- If we're standing on the ground tile, then remove it
     if tile_current == MAP_TILE_GROUND then
         self.level:set_tile_at(self.entity.x, self.entity.y, MAP_TILE_EMPTY)
+    end
+
+    -- If we're standing on a diamond tile, then remove it
+    if tile_current == MAP_TILE_DIAMOND then
+        self.level:set_tile_at(self.entity.x, self.entity.y, MAP_TILE_EMPTY)
+        self.entity.diamonds = self.entity.diamonds + 1
     end
 end

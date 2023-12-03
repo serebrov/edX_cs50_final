@@ -81,7 +81,7 @@ FRAMES = {
 }
 
 FONTS = {
-    ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
+    ['small'] = love.graphics.newFont('fonts/font.ttf', 10),
     ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),
     ['large'] = love.graphics.newFont('fonts/font.ttf', 32),
 }
