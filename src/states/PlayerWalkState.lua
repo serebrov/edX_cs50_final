@@ -20,5 +20,12 @@ function PlayerWalkState:update(dt)
     else
         self.entity:change_state('idle')
     end
+
     EntityWalkState.update(self, dt)
+
+    tile_current = self.level:tile_at(self.entity.x, self.entity.y)
+    -- If we're standing on the ground tile, then remove it
+    if tile_current == MAP_TILE_GROUND then
+        self.level:set_tile_at(self.entity.x, self.entity.y, MAP_TILE_EMPTY)
+    end
 end
