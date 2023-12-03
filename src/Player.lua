@@ -1,8 +1,8 @@
 Player = Class{__includes = Entity}
 
 function Player:init(def, level)
-    def.x = 1 * TILE_SIZE
-    def.y = 1 * TILE_SIZE - 11
+    def.x = 2 * TILE_SIZE
+    def.y = 2 * TILE_SIZE
     Entity.init(self, def, level)
 end
 

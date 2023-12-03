@@ -81,5 +81,6 @@ function Level:tile_at(x, y)
     x = math.floor(x / TILE_SIZE) + 1
     y = math.floor(y / TILE_SIZE) + 1
 
+    -- return self.map[y][x], (x-1)*TILE_SIZE, (y-1)*TILE_SIZE
     return self.map[y][x]
 end

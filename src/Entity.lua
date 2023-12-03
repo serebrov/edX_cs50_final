@@ -7,6 +7,12 @@ function Entity:init(def, level)
 
     self.x = def.x
     self.y = def.y
+
+    self.offset_x = def.offset_x or 0
+    self.offset_y = def.offset_y or 0
+    self.scale_x = def.scale_x or 1
+    self.scale_y = def.scale_y or 1
+
     self.width = TILE_SIZE
     self.height = TILE_SIZE
     self.walk_speed = def.walk_speed
@@ -35,6 +41,18 @@ end
 
 function Entity:render()
     self:state_machine():render()
+end
+
+function Entity:draw(animation)
+    love.graphics.draw(
+        TEXTURES[animation.texture],
+        FRAMES[animation.texture][animation:get_current_frame()],
+        math.floor(self.x) + self.offset_x,
+        math.floor(self.y) + self.offset_y,
+        0,
+        self.scale_x,
+        self.scale_y
+    )
 end
 
 function Entity:createAnimations(animations)

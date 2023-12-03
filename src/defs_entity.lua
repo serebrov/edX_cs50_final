@@ -1,6 +1,10 @@
 ENTITY_DEFS = {
     ['player'] = {
         walk_speed = PLAYER_WALK_SPEED,
+        offset_x = 0,
+        offset_y = 0,
+        scale_x = 0.5,
+        scale_y = 0.5,
         animations = {
             ['walk-left'] = {
                 frames = {13, 14, 15, 16},

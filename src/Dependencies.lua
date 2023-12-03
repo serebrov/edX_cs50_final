@@ -71,13 +71,13 @@ TEXTURES = {
     ['exit'] = love.graphics.newImage('graphics/exit.png'),
     ['wall'] = love.graphics.newImage('graphics/wall.png'),
     ['ground'] = love.graphics.newImage('graphics/ground.png'),
-    ['character-walk'] = love.graphics.newImage('graphics/character_walk.png'),
+    ['character-walk'] = love.graphics.newImage('graphics/character_walk_32.png'),
     -- ['boulders'] = love.graphics.newImage('graphics/boulders.png'),
     -- ['diamonds'] = love.graphics.newImage('graphics/diamonds.png'),
 }
 
 FRAMES = {
-    ['character-walk'] = generate_frames(TEXTURES['character-walk'], 16, 32)
+    ['character-walk'] = generate_frames(TEXTURES['character-walk'], 32, 32)
 }
 
 FONTS = {

@@ -12,10 +12,5 @@ function EntityIdleState:update(dt)
 end
 
 function EntityIdleState:render()
-    love.graphics.draw(
-        TEXTURES[self.animation.texture],
-        FRAMES[self.animation.texture][self.animation:get_current_frame()],
-        math.floor(self.entity.x),
-        math.floor(self.entity.y)
-    )
+    self.entity:draw(self.animation)
 end
