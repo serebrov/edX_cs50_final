@@ -1,30 +1,40 @@
 StateMachine = Class{}
 
 function StateMachine:init(states)
-	self.empty = {
-		render = function() end,
-		update = function() end,
-		processAI = function() end,
-		enter = function() end,
-		exit = function() end
-	}
+	-- self.empty = {
+	-- 	render = function() end,
+	-- 	update = function() end,
+	-- 	processAI = function() end,
+	-- 	enter = function() end,
+	-- 	exit = function() end
+	-- }
 	self.states = states or {} -- [name] -> [function that returns states]
-	self.current = self.empty
+	self._current = nil -- self.empty
+end
+
+function StateMachine:current_state()
+	if self._current == nil then
+		-- raise an error
+		error('No current state!')
+	end
+	return self._current
 end
 
 function StateMachine:change(stateName, enterParams)
 	assert(self.states[stateName]) -- state must exist!
-	self.current:exit()
-	self.current = self.states[stateName]()
-	self.current:enter(enterParams)
+	if self._current then
+		self:current_state():exit()
+	end
+	self._current = self.states[stateName]()
+	self._current:enter(enterParams)
 end
 
 function StateMachine:update(dt)
-	self.current:update(dt)
+	self:current_state():update(dt)
 end
 
 function StateMachine:render()
-	self.current:render()
+	self:current_state():render()
 end
 
 --[[
@@ -35,5 +45,5 @@ end
 	save on code) See how PlayerWalkState calls EntityWalkState.update within :update for an example.
 ]]
 function StateMachine:processAI(params, dt)
-	self.current:processAI(params, dt)
+	self:current_state():processAI(params, dt)
 end

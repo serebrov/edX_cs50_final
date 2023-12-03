@@ -58,11 +58,11 @@ end
 
 function Level:render()
     textureMap = {
-        ['R'] = TEXTURES['rock'],
-        ['D'] = TEXTURES['diamond'],
-        ['E'] = TEXTURES['exit'],
-        ['W'] = TEXTURES['wall'],
-        ['-'] = TEXTURES['ground'],
+        [MAP_TILE_ROCK] = TEXTURES['rock'],
+        [MAP_TILE_DIAMOND] = TEXTURES['diamond'],
+        [MAP_TILE_EXIT] = TEXTURES['exit'],
+        [MAP_TILE_WALL] = TEXTURES['wall'],
+        [MAP_TILE_GROUND] = TEXTURES['ground'],
         -- [' '] = TEXTURES['empty'], -- empty space, no texture
     }
     -- Draw the map
@@ -74,4 +74,12 @@ function Level:render()
             end
         end
     end
+end
+
+function Level:tile_at(x, y)
+    -- Convert from pixel coordinates to tile coordinates
+    x = math.floor(x / TILE_SIZE) + 1
+    y = math.floor(y / TILE_SIZE) + 1
+
+    return self.map[y][x]
 end
