@@ -45,9 +45,11 @@ function Level:init(levelDefinition)
     for ln = 1, #lines do
         local row = 1
         line = lines[ln]
+
         table.insert(self.map, {})
         tile = Tile('wall', (row-1)*TILE_SIZE, ln*TILE_SIZE)
         table.insert(self.map[#self.map], tile) -- left wall
+
         for char in line:gmatch(".") do
             row = row + 1
             if char ~= ' ' then
@@ -55,9 +57,10 @@ function Level:init(levelDefinition)
                 table.insert(self.map[#self.map], tile)
             else
                 tile = NoTile({}, (row-1)*TILE_SIZE, ln*TILE_SIZE)
-                table.insert(self.map[#self.map], nil)
+                table.insert(self.map[#self.map], tile)
             end
         end
+
         row = row + 1
         tile = Tile('wall', (row-1)*TILE_SIZE, ln*TILE_SIZE)
         table.insert(self.map[#self.map], tile) -- right wall
@@ -71,26 +74,38 @@ function Level:init(levelDefinition)
     end
 
     -- -- Debugging: print the map
-    -- for y = 1, #self.map do
-    --     for x = 1, #self.map[y] do
-    --         io.write(self.map[y][x])
-    --     end
-    --     io.write('\n')
-    -- end
+    for y = 1, #self.map do
+        for x = 1, #self.map[y] do
+            io.write(self.map[y][x].id)
+        end
+        io.write('\n')
+    end
 end
 
 function Level:update(dt)
     -- Scan the map for falling rocks
     -- Rocks fall if there is an empty space below them
-    for y = 1, #self.map do
-        -- for x = 1, #self.map[y] do
-            -- if self.map[y][x] == MAP_TILE_ROCK then
-            --     if self.map[y+1][x] == MAP_TILE_EMPTY then
-            --         self.map[y][x] = MAP_TILE_EMPTY
-            --         self.map[y+1][x] = MAP_TILE_ROCK
-            --     end
-            -- end
-        -- end
+    -- We accumulate rock.dy and then move the rock when it is >= TILE_SIZE
+    for y = 1, #self.map-2 do
+        for x = 1, #self.map[y]-1 do
+            tile = self.map[y][x]
+            if tile.can_fall then
+                tile_next = self.map[y+1][x]
+                if tile_next == nil then
+                    print(y, x)
+                end
+                if tile_next.isEmpty() then
+                    tile.dy = tile.dy + dt * TILE_FALL_SPEED
+                    if tile.dy >= TILE_SIZE then
+                        tile.dy = 0
+                        self.map[y+1][x] = tile
+                        tile.y = tile.y + TILE_SIZE
+                        self.map[y][x] = tile_next
+                        tile_next.y = tile_next.y - TILE_SIZE
+                    end
+                end
+            end
+        end
     end
 end
 

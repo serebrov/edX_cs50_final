@@ -51,10 +51,12 @@ ENTITY_DEFS = {
     ['rock'] = {
         texture = 'rock',
         solid = true,
+        can_fall = true,
         speed_bump = 0,
     },
     ['diamond'] = {
         texture = 'diamond',
+        can_fall = true,
         speed_bump = 0.7,
     },
     ['exit'] = {
