@@ -53,7 +53,19 @@ function Level:init(levelDefinition)
     -- end
 end
 
-function Level:update()
+function Level:update(dt)
+    -- Scan the map for falling rocks
+    -- Rocks fall if there is an empty space below them
+    for y = 1, #self.map do
+        for x = 1, #self.map[y] do
+            if self.map[y][x] == MAP_TILE_ROCK then
+                if self.map[y+1][x] == MAP_TILE_EMPTY then
+                    self.map[y][x] = MAP_TILE_EMPTY
+                    self.map[y+1][x] = MAP_TILE_ROCK
+                end
+            end
+        end
+    end
 end
 
 function Level:render()

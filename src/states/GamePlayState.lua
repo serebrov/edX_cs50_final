@@ -15,6 +15,7 @@ function GamePlayState:update(dt)
     end
 
     self.player:update(dt)
+    self.level:update(dt)
 end
 
 function GamePlayState:render()
