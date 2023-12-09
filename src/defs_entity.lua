@@ -43,5 +43,34 @@ ENTITY_DEFS = {
                 texture = 'character-walk'
             }
         }
+    },
+    ['ground'] = {
+        texture = 'ground',
+        speed_bump = 0.5,
+    },
+    ['rock'] = {
+        texture = 'rock',
+        solid = true,
+        speed_bump = 0,
+    },
+    ['diamond'] = {
+        texture = 'diamond',
+        speed_bump = 0.7,
+    },
+    ['exit'] = {
+        texture = 'exit',
+        speed_bump = 1,
+        animations = {
+            ['active'] = {
+                frames = {1,2,3,4},
+                interval = 0.15,
+                texture = 'exit-active'
+            },
+        }
+    },
+    ['wall'] = {
+        texture = 'wall',
+        solid = true,
+        speed_bump = 0,
     }
 }

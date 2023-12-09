@@ -1,12 +1,23 @@
 Entity = Class{}
 
-function Entity:init(def, level)
-    self.level = level
+function Entity:init(def, x, y)
     self.direction = 'right'
-    self.animations = self:createAnimations(def.animations)
+    self.walk_speed = def.walk_speed
 
-    self.x = def.x
-    self.y = def.y
+    self.animations = createAnimations(def.animations)
+    self.animation = nil
+
+    if def.texture ~= nil then
+        self.texture = TEXTURES[def.texture]
+    end
+
+    assert (self.animations ~= nil or self.texture ~= nil, 'Object must have animations or texture')
+
+    assert(x ~= nil, 'Object must have an x coordinate')
+    assert(y ~= nil, 'Object must have an y coordinate')
+
+    self.x = x
+    self.y = y
 
     self.offset_x = def.offset_x or 0
     self.offset_y = def.offset_y or 0
@@ -15,47 +26,44 @@ function Entity:init(def, level)
 
     self.width = TILE_SIZE
     self.height = TILE_SIZE
-    self.walk_speed = def.walk_speed
-end
-
-function Entity:state_machine()
-    if self.stateMachine == nil then
-        self.stateMachine = self:create_state_machine()
-    end
-
-    return self.stateMachine
-end
-
-function Entity:change_state(name, params)
-    self.stateMachine:change(name, params)
-end
-
--- Should be implemented by subclasses
-function Entity:create_state_machine()
-    return StateMachine {}
+    self.solid = def.solid
 end
 
 function Entity:update(dt)
-    self.stateMachine:update(dt)
 end
 
 function Entity:render()
-    self:state_machine():render()
+    self:draw()
 end
 
-function Entity:draw(animation)
-    love.graphics.draw(
-        TEXTURES[animation.texture],
-        FRAMES[animation.texture][animation:get_current_frame()],
+function Entity:draw()
+    if self.animation then
+        love.graphics.draw(
+        TEXTURES[self.animation.texture],
+        FRAMES[self.animation.texture][self.animation:get_current_frame()],
         math.floor(self.x) + self.offset_x,
         math.floor(self.y) + self.offset_y,
         0,
         self.scale_x,
         self.scale_y
-    )
+        )
+    else
+        love.graphics.draw(
+        self.texture,
+        math.floor(self.x) + self.offset_x,
+        math.floor(self.y) + self.offset_y,
+        0,
+        self.scale_x,
+        self.scale_y
+        )
+    end
 end
 
-function Entity:createAnimations(animations)
+function createAnimations(animations)
+    if animations == nil then
+        return nil
+    end
+
     local animationsReturned = {}
 
     for k, animationDef in pairs(animations) do

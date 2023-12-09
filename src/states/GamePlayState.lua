@@ -2,7 +2,7 @@ GamePlayState = Class{__includes = BaseState}
 
 function GamePlayState:init()
     self.level = Level(LEVEL_DEFS['level1'])
-    self.player = Player(ENTITY_DEFS['player'], self.level)
+    self.player = Player(ENTITY_DEFS['player'], 2 * TILE_SIZE, 2 * TILE_SIZE, self.level)
 end
 
 function GamePlayState:update(dt)

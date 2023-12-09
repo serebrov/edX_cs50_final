@@ -1,10 +1,9 @@
 Player = Class{__includes = Entity}
 
-function Player:init(def, level)
+function Player:init(def, x, y, level)
     self.diamonds = 0
-    def.x = 2 * TILE_SIZE
-    def.y = 2 * TILE_SIZE
-    Entity.init(self, def, level)
+    self.level = level
+    Entity.init(self, def, x, y)
 end
 
 function Player:create_state_machine()
@@ -14,4 +13,24 @@ function Player:create_state_machine()
     }
     machine:change('idle')
     return machine
+end
+
+function Player:state_machine()
+    if self.stateMachine == nil then
+        self.stateMachine = self:create_state_machine()
+    end
+
+    return self.stateMachine
+end
+
+function Player:change_state(name, params)
+    self.stateMachine:change(name, params)
+end
+
+function Player:update(dt)
+    self.stateMachine:update(dt)
+end
+
+function Player:render()
+    self:state_machine():render()
 end

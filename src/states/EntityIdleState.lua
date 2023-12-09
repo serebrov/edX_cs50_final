@@ -4,7 +4,11 @@ function EntityIdleState:init(entity)
     self.entity = entity
 
     animation_name = 'idle-' .. self.entity.direction
-    self.animation = self.entity.animations[animation_name]
+    self.entity.animation = self.entity.animations[animation_name]
+    assert(
+        self.entity.animation ~= nil,
+        'EntityIdleState:init() animation is nil for ' .. animation_name
+    )
 end
 
 function EntityIdleState:update(dt)
@@ -12,5 +16,6 @@ function EntityIdleState:update(dt)
 end
 
 function EntityIdleState:render()
-    self.entity:draw(self.animation)
+    assert(self.entity.animation ~= nil, 'EntityIdleState:render() animation is nil')
+    self.entity:draw()
 end
