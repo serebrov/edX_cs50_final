@@ -21,17 +21,17 @@ function EntityWalkState:update(dt)
     tile_next = nil
 
     if self.entity.direction == 'left' then
-        dx = - self.entity.walk_speed * dt
         tile_next = self.level:tile_at(self.entity.x - 1, self.entity.y + 1)
+        dx = - self.entity.walk_speed * dt * TILE_SPEED_BUMP[tile_next]
     elseif self.entity.direction == 'right' then
-        dx = self.entity.walk_speed * dt
         tile_next = self.level:tile_at(self.entity.x + TILE_SIZE, self.entity.y + 1)
+        dx = self.entity.walk_speed * dt * TILE_SPEED_BUMP[tile_next]
     elseif self.entity.direction == 'up' then
-        dy = - self.entity.walk_speed * dt
         tile_next = self.level:tile_at(self.entity.x, self.entity.y - 1)
+        dy = - self.entity.walk_speed * dt * TILE_SPEED_BUMP[tile_next]
     elseif self.entity.direction == 'down' then
-        dy = self.entity.walk_speed * dt
         tile_next = self.level:tile_at(self.entity.x, self.entity.y + TILE_SIZE)
+        dy = self.entity.walk_speed * dt * TILE_SPEED_BUMP[tile_next]
     end
 
     if tile_next == MAP_TILE_WALL then
