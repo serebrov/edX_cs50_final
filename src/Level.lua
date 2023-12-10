@@ -1,6 +1,8 @@
 Level = Class{}
 
-function Level:init(levelDefinition)
+function Level:init(levelDefinition, gameState)
+    self.gameState = gameState
+
     -- Map looks like this
     -- ['map'] = [[
     --   - -R RR--R-D--D
@@ -52,13 +54,16 @@ function Level:init(levelDefinition)
 
         for char in line:gmatch(".") do
             row = row + 1
-            if char ~= ' ' then
-                tile = Tile(tileMap[char], (row-1)*TILE_SIZE, ln*TILE_SIZE)
-                table.insert(self.map[#self.map], tile)
+            local tile = nil
+            if char == 'P' then
+                self.player = Player((row-1) * TILE_SIZE, ln * TILE_SIZE, self)
+                tile = NoTile({}, (row-1) * TILE_SIZE, ln * TILE_SIZE)
+            elseif char ~= ' ' then
+                tile = Tile(tileMap[char], (row-1) * TILE_SIZE, ln * TILE_SIZE)
             else
-                tile = NoTile({}, (row-1)*TILE_SIZE, ln*TILE_SIZE)
-                table.insert(self.map[#self.map], tile)
+                tile = NoTile({}, (row-1) * TILE_SIZE, ln * TILE_SIZE)
             end
+            table.insert(self.map[#self.map], tile)
         end
 
         row = row + 1
@@ -74,15 +79,17 @@ function Level:init(levelDefinition)
     end
 
     -- -- Debugging: print the map
-    for y = 1, #self.map do
-        for x = 1, #self.map[y] do
-            io.write(self.map[y][x].id)
-        end
-        io.write('\n')
-    end
+    -- for y = 1, #self.map do
+    --     for x = 1, #self.map[y] do
+    --         io.write(self.map[y][x].id)
+    --     end
+    --     io.write('\n')
+    -- end
 end
 
 function Level:update(dt)
+    self.player:update(dt)
+
     -- Scan the map for falling rocks
     -- Rocks fall if there is an empty space below them
     -- We accumulate rock.dy and then move the rock when it is >= TILE_SIZE
@@ -91,18 +98,31 @@ function Level:update(dt)
             tile = self.map[y][x]
             if tile.can_fall then
                 tile_next = self.map[y+1][x]
-                if tile_next == nil then
-                    print(y, x)
-                end
                 if tile_next.isEmpty() then
                     tile.dy = tile.dy + dt * TILE_FALL_SPEED
+                    if tile_next.x == self.player.x and tile_next.y == self.player.y then
+                        -- If the player is directly under the falling tile,
+                        -- stop the fall.
+                        if not tile.falling then
+                            tile.dy = 0
+                        end
+                    end
                     if tile.dy >= TILE_SIZE then
+                        -- Mark the tile as falling and move it down
+                        tile.falling = true
                         tile.dy = 0
                         self.map[y+1][x] = tile
                         tile.y = tile.y + TILE_SIZE
                         self.map[y][x] = tile_next
                         tile_next.y = tile_next.y - TILE_SIZE
+
+                        -- If the tile falls on the player, game over
+                        if tile.x == self.player.x and tile.y == self.player.y then
+                            self.gameState:gameOver()
+                        end
                     end
+                else
+                    tile.dy = 0
                 end
             end
         end
@@ -110,20 +130,13 @@ function Level:update(dt)
 end
 
 function Level:render()
-    -- textureMap = {
-    --     [MAP_TILE_GROUND] = TEXTURES['ground'],
-    --     [MAP_TILE_ROCK] = TEXTURES['rock'],
-    --     [MAP_TILE_DIAMOND] = TEXTURES['diamond'],
-    --     [MAP_TILE_EXIT] = TEXTURES['exit'],
-    --     [MAP_TILE_WALL] = TEXTURES['wall'],
-    --     -- [' '] = TEXTURES['empty'], -- empty space, no texture
-    -- }
     -- Draw the map
     for y = 1, #self.map do
         for x = 1, #self.map[y] do
             self.map[y][x]:render()
         end
     end
+    self.player:render()
     -- for i = 1, #self.map do
     --     self.map[y]:render()
     -- end

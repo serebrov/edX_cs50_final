@@ -5,6 +5,7 @@ function Tile:init(id, x, y)
     self.id = id
     self.speed_bump = def.speed_bump
     self.can_fall = def.can_fall
+    self.falling = false
 
     -- Used for falling tiles
     self.dy = 0

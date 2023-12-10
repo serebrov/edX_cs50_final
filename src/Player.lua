@@ -1,6 +1,8 @@
 Player = Class{__includes = Entity}
 
-function Player:init(def, x, y, level)
+function Player:init(x, y, level)
+    self.id = 'player'
+    def = ENTITY_DEFS['player']
     self.diamonds = 0
     self.level = level
     Entity.init(self, def, x, y)
