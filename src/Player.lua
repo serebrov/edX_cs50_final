@@ -1,10 +1,15 @@
-Player = Class{__includes = Entity}
+Player = Class{__includes = EntityWithState}
 
 function Player:init(x, y, level)
     self.id = 'player'
+
     def = ENTITY_DEFS['player']
     self.diamonds = 0
     self.level = level
+
+    self.direction = 'right'
+    self.walk_speed = def.walk_speed
+
     Entity.init(self, def, x, y)
 end
 
@@ -15,24 +20,4 @@ function Player:create_state_machine()
     }
     machine:change('idle')
     return machine
-end
-
-function Player:state_machine()
-    if self.stateMachine == nil then
-        self.stateMachine = self:create_state_machine()
-    end
-
-    return self.stateMachine
-end
-
-function Player:change_state(name, params)
-    self.stateMachine:change(name, params)
-end
-
-function Player:update(dt)
-    self.stateMachine:update(dt)
-end
-
-function Player:render()
-    self:state_machine():render()
 end

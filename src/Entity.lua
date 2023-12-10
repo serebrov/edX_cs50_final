@@ -1,9 +1,6 @@
 Entity = Class{}
 
 function Entity:init(def, x, y)
-    self.direction = 'right'
-    self.walk_speed = def.walk_speed
-
     self.animations = createAnimations(def.animations)
     self.animation = nil
 

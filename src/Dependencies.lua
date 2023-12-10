@@ -15,10 +15,9 @@ require 'src/StateMachine'
 require 'src/Level'
 require 'src/Animation'
 require 'src/Entity'
+require 'src/EntityWithState'
 require 'src/Player'
 require 'src/Tile'
--- require 'src/Hitbox'
--- require 'src/Util'
 
 require 'src/states/BaseState'
 
