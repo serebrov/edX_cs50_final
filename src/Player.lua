@@ -3,6 +3,9 @@ Player class.
 
 Besides EntityWithState also includes Tile so we can
 uniformly render the player and the tiles.
+
+Note: "player as a tile" system is currently unused,
+we handle the player separately in Level.lua.
 ]]--
 Player = Class{__includes = {EntityWithState, Tile}}
 

@@ -59,14 +59,13 @@ function Level:init(levelDefinition, gameState)
             local tile = nil
             if char == 'P' then
                 self.player = Player(self, (row-1) * TILE_SIZE, ln * TILE_SIZE)
-                -- Alternatively, we could use a NoTile here, then the player
-                -- is a separate entity that is rendered on top of the map.
-                -- Both approaches work, but I think it's better to have the
-                -- player be a tile and a part of the map, so we can uniformly
-                -- render the player and the tiles and later on we can add
-                -- enemies that are also tiles.
-                -- tile = NoTile({}, self, (row-1) * TILE_SIZE, ln * TILE_SIZE)
-                tile = self.player
+                tile = NoTile({}, self, (row-1) * TILE_SIZE, ln * TILE_SIZE)
+                -- Alternatively, we could use a player as a tile here,
+                -- but then it becomes to difficult to update the map
+                -- each time the player moves.
+                -- Maybe if we switch to using map coordinates instead of
+                -- pixel coordinates, then it would be easier to update the map.
+                -- tile = self.player
             elseif char == 'E' then
                 tile = ExitTile(tileMap[char], self, (row-1) * TILE_SIZE, ln * TILE_SIZE)
             elseif char ~= ' ' then
@@ -102,7 +101,7 @@ function Level:init(levelDefinition, gameState)
 end
 
 function Level:update(dt)
-    -- self.player:update(dt)
+    self.player:update(dt)
 
     -- Scan the map for falling rocks
     -- Rocks fall if there is an empty space below them
@@ -115,7 +114,7 @@ function Level:update(dt)
                 tile_next = self.map[y+1][x]
                 if tile_next.isEmpty() then
                     tile.dy = tile.dy + dt * TILE_FALL_SPEED
-                    if tile_next.x == self.player.x and tile_next.y == self.player.y then
+                    if tile_next == self:tile_at(self.player.x, self.player.y) then
                         -- If the player is directly under the falling tile,
                         -- stop the fall.
                         if not tile.falling then
@@ -126,7 +125,7 @@ function Level:update(dt)
                         -- Mark the tile as falling and move it down
                         tile.falling = true
                         -- If the tile falls on the player, game over
-                        if tile.x == self.player.x and tile.y == self.player.y then
+                        if tile_next == self:tile_at(self.player.x, self.player.y) then
                             self.gameState:gameOver()
                         end
 
@@ -151,7 +150,7 @@ function Level:render()
             self.map[y][x]:render()
         end
     end
-    -- self.player:render()
+    self.player:render()
     -- for i = 1, #self.map do
     --     self.map[y]:render()
     -- end
