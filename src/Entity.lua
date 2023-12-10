@@ -27,6 +27,9 @@ function Entity:init(def, x, y)
 end
 
 function Entity:update(dt)
+    if self.animation then
+        self.animation:update(dt)
+    end
 end
 
 function Entity:render()
@@ -36,22 +39,22 @@ end
 function Entity:draw()
     if self.animation then
         love.graphics.draw(
-        TEXTURES[self.animation.texture],
-        FRAMES[self.animation.texture][self.animation:get_current_frame()],
-        math.floor(self.x) + self.offset_x,
-        math.floor(self.y) + self.offset_y,
-        0,
-        self.scale_x,
-        self.scale_y
+            TEXTURES[self.animation.texture],
+            FRAMES[self.animation.texture][self.animation:get_current_frame()],
+            math.floor(self.x) + self.offset_x,
+            math.floor(self.y) + self.offset_y,
+            0,
+            self.scale_x,
+            self.scale_y
         )
     else
         love.graphics.draw(
-        self.texture,
-        math.floor(self.x) + self.offset_x,
-        math.floor(self.y) + self.offset_y,
-        0,
-        self.scale_x,
-        self.scale_y
+            self.texture,
+            math.floor(self.x) + self.offset_x,
+            math.floor(self.y) + self.offset_y,
+            0,
+            self.scale_x,
+            self.scale_y
         )
     end
 end

@@ -73,8 +73,8 @@ end
 
 function ExitTileOffState:update(dt)
     -- If the player collected all the diamonds, change the state to on
-    if self.level.player.diamonds == self.level.diamonds then
-    -- if self.level.player.diamonds == 1 then
+    --  if self.level.player.diamonds == self.level.diamonds then
+    if self.level.player.diamonds == 1 then
         self.tile:change_state('on')
     end
 end
@@ -99,6 +99,7 @@ function ExitTileOnState:update(dt)
     if self.tile.x == self.level.player.x and self.tile.y == self.level.player.y then
         self.level:next_level()
     end
+    self.tile.animation:update(dt)
 end
 
 function ExitTileOnState:render()
