@@ -34,11 +34,11 @@ LEVEL_DEFS = {
         --  --R-
         --]],
         ['map'] = [[
-          P--R-RR--R-D--D-D----D
+          ---R-RR--R-D--D-D----D
           --D---RDRR---R----R-R-
           --R--R-DR--R-R--R-R-R-
-          --DD--R-R-RR-RERR-R-RE
-          --R-D-R----R----R-----
+          --DD--R-R-RR-R-RR-R-RE
+          --R-D-R----R--P-R-----
           --R-D-R--R -  R -    R
           --R-DD---R-- -R-- - -R
           --R-D-R  R -  R -    R

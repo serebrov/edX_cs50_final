@@ -40,7 +40,7 @@ function Level:init(levelDefinition, gameState)
     -- top wall
     table.insert(self.map, {})
     for i = 1, mapWidth + 2 do
-        tile = Tile('wall', (i-1)*TILE_SIZE, 0)
+        tile = MapTile('wall', (i-1)*TILE_SIZE, 0)
         table.insert(self.map[#self.map], tile)
     end
 
@@ -49,7 +49,7 @@ function Level:init(levelDefinition, gameState)
         line = lines[ln]
 
         table.insert(self.map, {})
-        tile = Tile('wall', (row-1)*TILE_SIZE, ln*TILE_SIZE)
+        tile = MapTile('wall', (row-1)*TILE_SIZE, ln*TILE_SIZE)
         table.insert(self.map[#self.map], tile) -- left wall
 
         for char in line:gmatch(".") do
@@ -57,9 +57,10 @@ function Level:init(levelDefinition, gameState)
             local tile = nil
             if char == 'P' then
                 self.player = Player((row-1) * TILE_SIZE, ln * TILE_SIZE, self)
-                tile = NoTile({}, (row-1) * TILE_SIZE, ln * TILE_SIZE)
+                --tile = NoTile({}, (row-1) * TILE_SIZE, ln * TILE_SIZE)
+                tile = self.player
             elseif char ~= ' ' then
-                tile = Tile(tileMap[char], (row-1) * TILE_SIZE, ln * TILE_SIZE)
+                tile = MapTile(tileMap[char], (row-1) * TILE_SIZE, ln * TILE_SIZE)
             else
                 tile = NoTile({}, (row-1) * TILE_SIZE, ln * TILE_SIZE)
             end
@@ -67,14 +68,14 @@ function Level:init(levelDefinition, gameState)
         end
 
         row = row + 1
-        tile = Tile('wall', (row-1)*TILE_SIZE, ln*TILE_SIZE)
+        tile = MapTile('wall', (row-1)*TILE_SIZE, ln*TILE_SIZE)
         table.insert(self.map[#self.map], tile) -- right wall
     end
 
     -- bottom wall
     table.insert(self.map, {})
     for i = 1, mapWidth + 2 do
-        tile = Tile('wall', (i-1)*TILE_SIZE, (#lines+1)*TILE_SIZE)
+        tile = MapTile('wall', (i-1)*TILE_SIZE, (#lines+1)*TILE_SIZE)
         table.insert(self.map[#self.map], tile)
     end
 
@@ -88,7 +89,7 @@ function Level:init(levelDefinition, gameState)
 end
 
 function Level:update(dt)
-    self.player:update(dt)
+    -- self.player:update(dt)
 
     -- Scan the map for falling rocks
     -- Rocks fall if there is an empty space below them
@@ -96,6 +97,7 @@ function Level:update(dt)
     for y = 1, #self.map-2 do
         for x = 1, #self.map[y]-1 do
             tile = self.map[y][x]
+            tile:update(dt)
             if tile.can_fall then
                 tile_next = self.map[y+1][x]
                 if tile_next.isEmpty() then
@@ -136,7 +138,7 @@ function Level:render()
             self.map[y][x]:render()
         end
     end
-    self.player:render()
+    -- self.player:render()
     -- for i = 1, #self.map do
     --     self.map[y]:render()
     -- end

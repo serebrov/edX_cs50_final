@@ -16,8 +16,8 @@ require 'src/Level'
 require 'src/Animation'
 require 'src/Entity'
 require 'src/EntityWithState'
-require 'src/Player'
 require 'src/Tile'
+require 'src/Player'
 
 require 'src/states/BaseState'
 

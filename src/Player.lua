@@ -1,4 +1,10 @@
-Player = Class{__includes = EntityWithState}
+--[[
+Player class.
+
+Besides EntityWithState also includes Tile so we can
+uniformly render the player and the tiles.
+]]--
+Player = Class{__includes = {EntityWithState, Tile}}
 
 function Player:init(x, y, level)
     self.id = 'player'
@@ -10,6 +16,7 @@ function Player:init(x, y, level)
     self.direction = 'right'
     self.walk_speed = def.walk_speed
 
+    Tile.init(self, 'player', x, y)
     Entity.init(self, def, x, y)
 end
 
