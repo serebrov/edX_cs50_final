@@ -14,6 +14,7 @@ end
 
 function EntityWithState:update(dt)
     self.stateMachine:update(dt)
+    Entity.update(self, dt)
 end
 
 function EntityWithState:render()
