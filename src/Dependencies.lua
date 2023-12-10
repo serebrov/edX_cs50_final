@@ -12,6 +12,8 @@ require 'src/defs_level'
 require 'src/defs_entity'
 
 require 'src/StateMachine'
+require 'src/states/BaseState'
+
 require 'src/Level'
 require 'src/Animation'
 require 'src/Entity'
@@ -19,15 +21,14 @@ require 'src/EntityWithState'
 require 'src/Tile'
 require 'src/Player'
 
-require 'src/states/BaseState'
-
 require 'src/states/EntityIdleState'
 require 'src/states/EntityWalkState'
 require 'src/states/PlayerIdleState'
 require 'src/states/PlayerWalkState'
-require 'src/states/GameOverState'
-require 'src/states/GamePlayState'
 require 'src/states/GameStartState'
+require 'src/states/GamePlayState'
+require 'src/states/GameWonState'
+require 'src/states/GameOverState'
 
 --[[
     Given an spritesheet and the frame width and  height, split the sheet
@@ -67,6 +68,7 @@ TEXTURES = {
     ['rock'] = love.graphics.newImage('graphics/rock.png'),
     ['diamond'] = love.graphics.newImage('graphics/diamond.png'),
     ['exit'] = love.graphics.newImage('graphics/exit.png'),
+    ['exit-on'] = love.graphics.newImage('graphics/exit-on.png'),
     ['wall'] = love.graphics.newImage('graphics/wall.png'),
     ['ground'] = love.graphics.newImage('graphics/ground.png'),
     ['character-walk'] = love.graphics.newImage('graphics/character_walk_32.png'),
@@ -75,7 +77,8 @@ TEXTURES = {
 }
 
 FRAMES = {
-    ['character-walk'] = generate_frames(TEXTURES['character-walk'], 32, 32)
+    ['character-walk'] = generate_frames(TEXTURES['character-walk'], 32, 32),
+    ['exit-on'] = generate_frames(TEXTURES['exit-on'], 16, 16)
 }
 
 FONTS = {

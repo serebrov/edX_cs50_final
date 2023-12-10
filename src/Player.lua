@@ -6,7 +6,7 @@ uniformly render the player and the tiles.
 ]]--
 Player = Class{__includes = {EntityWithState, Tile}}
 
-function Player:init(x, y, level)
+function Player:init(level, x, y)
     self.id = 'player'
 
     def = ENTITY_DEFS['player']
@@ -16,7 +16,7 @@ function Player:init(x, y, level)
     self.direction = 'right'
     self.walk_speed = def.walk_speed
 
-    Tile.init(self, 'player', x, y)
+    Tile.init(self, 'player', level, x, y)
     Entity.init(self, def, x, y)
 end
 

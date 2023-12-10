@@ -63,10 +63,10 @@ ENTITY_DEFS = {
         texture = 'exit',
         speed_bump = 1,
         animations = {
-            ['active'] = {
+            ['on'] = {
                 frames = {1,2,3,4},
                 interval = 0.15,
-                texture = 'exit-active'
+                texture = 'exit-on'
             },
         }
     },

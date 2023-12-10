@@ -2,6 +2,9 @@ Level = Class{}
 
 function Level:init(levelDefinition, gameState)
     self.gameState = gameState
+    self.diamonds = 0
+    -- A two dimentional array of tiles
+    self.map = {}
 
     -- Map looks like this
     -- ['map'] = [[
@@ -33,14 +36,13 @@ function Level:init(levelDefinition, gameState)
     end
 
     -- Parse the map into a two dimentional x-y table
-    self.map = {}
     -- All lines in the map must be the same length, take the length of the first line
     mapWidth = lines[1]:len()
 
     -- top wall
     table.insert(self.map, {})
     for i = 1, mapWidth + 2 do
-        tile = MapTile('wall', (i-1)*TILE_SIZE, 0)
+        tile = MapTile('wall', self, (i-1)*TILE_SIZE, 0)
         table.insert(self.map[#self.map], tile)
     end
 
@@ -49,33 +51,44 @@ function Level:init(levelDefinition, gameState)
         line = lines[ln]
 
         table.insert(self.map, {})
-        tile = MapTile('wall', (row-1)*TILE_SIZE, ln*TILE_SIZE)
+        tile = MapTile('wall', self, (row-1)*TILE_SIZE, ln*TILE_SIZE)
         table.insert(self.map[#self.map], tile) -- left wall
 
         for char in line:gmatch(".") do
             row = row + 1
             local tile = nil
             if char == 'P' then
-                self.player = Player((row-1) * TILE_SIZE, ln * TILE_SIZE, self)
-                --tile = NoTile({}, (row-1) * TILE_SIZE, ln * TILE_SIZE)
+                self.player = Player(self, (row-1) * TILE_SIZE, ln * TILE_SIZE)
+                -- Alternatively, we could use a NoTile here, then the player
+                -- is a separate entity that is rendered on top of the map.
+                -- Both approaches work, but I think it's better to have the
+                -- player be a tile and a part of the map, so we can uniformly
+                -- render the player and the tiles and later on we can add
+                -- enemies that are also tiles.
+                -- tile = NoTile({}, self, (row-1) * TILE_SIZE, ln * TILE_SIZE)
                 tile = self.player
+            elseif char == 'E' then
+                tile = ExitTile(tileMap[char], self, (row-1) * TILE_SIZE, ln * TILE_SIZE)
             elseif char ~= ' ' then
-                tile = MapTile(tileMap[char], (row-1) * TILE_SIZE, ln * TILE_SIZE)
+                tile = MapTile(tileMap[char], self, (row-1) * TILE_SIZE, ln * TILE_SIZE)
             else
-                tile = NoTile({}, (row-1) * TILE_SIZE, ln * TILE_SIZE)
+                tile = NoTile({}, self, (row-1) * TILE_SIZE, ln * TILE_SIZE)
+            end
+            if tile:isDiamond() then
+                self.diamonds = self.diamonds + 1
             end
             table.insert(self.map[#self.map], tile)
         end
 
         row = row + 1
-        tile = MapTile('wall', (row-1)*TILE_SIZE, ln*TILE_SIZE)
+        tile = MapTile('wall', self, (row-1)*TILE_SIZE, ln*TILE_SIZE)
         table.insert(self.map[#self.map], tile) -- right wall
     end
 
     -- bottom wall
     table.insert(self.map, {})
     for i = 1, mapWidth + 2 do
-        tile = MapTile('wall', (i-1)*TILE_SIZE, (#lines+1)*TILE_SIZE)
+        tile = MapTile('wall', self, (i-1)*TILE_SIZE, (#lines+1)*TILE_SIZE)
         table.insert(self.map[#self.map], tile)
     end
 
@@ -112,16 +125,16 @@ function Level:update(dt)
                     if tile.dy >= TILE_SIZE then
                         -- Mark the tile as falling and move it down
                         tile.falling = true
+                        -- If the tile falls on the player, game over
+                        if tile.x == self.player.x and tile.y == self.player.y then
+                            self.gameState:gameOver()
+                        end
+
                         tile.dy = 0
                         self.map[y+1][x] = tile
                         tile.y = tile.y + TILE_SIZE
                         self.map[y][x] = tile_next
                         tile_next.y = tile_next.y - TILE_SIZE
-
-                        -- If the tile falls on the player, game over
-                        if tile.x == self.player.x and tile.y == self.player.y then
-                            self.gameState:gameOver()
-                        end
                     end
                 else
                     tile.dy = 0
@@ -159,7 +172,11 @@ function Level:set_tile_at(x, y, tile)
     y = math.floor(y / TILE_SIZE) + 1
 
     if tile == nil then
-        tile = NoTile({}, (x-1)*TILE_SIZE, (y-1)*TILE_SIZE)
+        tile = NoTile({}, self, (x-1)*TILE_SIZE, (y-1)*TILE_SIZE)
     end
     self.map[y][x] = tile
+end
+
+function Level:next_level()
+    self.gameState:nextLevel()
 end

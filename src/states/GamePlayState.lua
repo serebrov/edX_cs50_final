@@ -31,3 +31,8 @@ end
 function GamePlayState:gameOver()
     gStateMachine:change('game-over')
 end
+
+function GamePlayState:nextLevel()
+    gStateMachine:change('game-won')
+    --self.level = Level(LEVEL_DEFS['level2'], self)
+end
