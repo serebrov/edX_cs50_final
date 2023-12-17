@@ -4,6 +4,8 @@ function Animation:init(def)
     self.texture = def.texture
     self.frames = def.frames
     self.looping = def.looping or true
+    self.scale_x = def.scale_x or 1
+    self.scale_y = def.scale_y or 1
 
     self.interval = def.interval or 0.05
     self.timer = 0
@@ -37,6 +39,9 @@ function Animation:render(x, y)
         self.texture,
         self.frames[self.currentFrame],
         math.floor(x),
-        math.floor(y)
+        math.floor(y),
+        0,
+        self.scale_x,
+        self.scale_y
     )
 end

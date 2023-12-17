@@ -31,22 +31,22 @@ function generate_frames(sheet, frame_width, frame_height)
 end
 
 TEXTURES = {
-    -- ['tiles'] = love.graphics.newImage('graphics/tilesheet.png'),
     ['background'] = love.graphics.newImage('graphics/background.png'),
     ['rock'] = love.graphics.newImage('graphics/rock.png'),
     ['diamond'] = love.graphics.newImage('graphics/diamond.png'),
     ['exit'] = love.graphics.newImage('graphics/exit.png'),
     ['exit-on'] = love.graphics.newImage('graphics/exit-on.png'),
+    ['exit-hi'] = love.graphics.newImage('graphics/exit_hi.png'),
+    ['exit-on-hi'] = love.graphics.newImage('graphics/exit-on_hi.png'),
     ['wall'] = love.graphics.newImage('graphics/wall.png'),
     ['ground'] = love.graphics.newImage('graphics/ground.png'),
     ['character-walk'] = love.graphics.newImage('graphics/character_walk_32.png'),
-    -- ['boulders'] = love.graphics.newImage('graphics/boulders.png'),
-    -- ['diamonds'] = love.graphics.newImage('graphics/diamonds.png'),
 }
 
 FRAMES = {
     ['character-walk'] = generate_frames(TEXTURES['character-walk'], 32, 32),
-    ['exit-on'] = generate_frames(TEXTURES['exit-on'], 16, 16)
+    ['exit-on'] = generate_frames(TEXTURES['exit-on'], 16, 16),
+    ['exit-on-hi'] = generate_frames(TEXTURES['exit-on'], 1024, 1024)
 }
 
 FONTS = {
