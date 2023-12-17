@@ -1,5 +1,9 @@
 GameWonState = Class{__includes = BaseState}
 
+function GameWonState:init()
+    changeMusic(SOUNDS['game-won'])
+end
+
 function GameWonState:update(dt)
     if love.keyboard.wasPressed('escape') then
         love.event.quit()

@@ -1,8 +1,16 @@
 GamePlayState = Class{__includes = BaseState}
 
 function GamePlayState:init()
-    self.level_number = 1
+    self:startLevel(1)
+end
+
+function GamePlayState:startLevel(level_number)
+    self.level_number = level_number
     self.level = Level(LEVEL_DEFS[self.level_number], self)
+
+    self.track = 'sounds/level' .. self.level_number .. '.mp3'
+    self.music = love.audio.newSource(self.track, 'static')
+    changeMusic(self.music)
 end
 
 function GamePlayState:update(dt)
@@ -36,8 +44,7 @@ end
 
 function GamePlayState:nextLevel()
     if self.level_number < #LEVEL_DEFS then
-        self.level_number = self.level_number + 1
-        self.level = Level(LEVEL_DEFS[self.level_number], self)
+        self:startLevel(self.level_number + 1)
     else
         gStateMachine:change('game-won')
     end

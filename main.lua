@@ -20,16 +20,17 @@ function love.load()
 
     love.graphics.setFont(FONTS['small'])
 
+    STATE = {
+        ['music'] = nil,
+    }
+
     gStateMachine = StateMachine {
-        ['game-start'] = function() return GameStartState() end,
-        ['game-play'] = function() return GamePlayState() end,
-        ['game-over'] = function() return GameOverState() end,
-        ['game-won'] = function() return GameWonState() end
+        ['game-start'] = function() return GameStartState(STATE) end,
+        ['game-play'] = function() return GamePlayState(STATE) end,
+        ['game-over'] = function() return GameOverState(STATE) end,
+        ['game-won'] = function() return GameWonState(STATE) end
     }
     gStateMachine:change('game-start')
-
-    SOUNDS['music']:setLooping(true)
-    SOUNDS['music']:play()
 
     love.keyboard.keysPressed = {}
 end

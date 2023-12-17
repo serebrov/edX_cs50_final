@@ -56,5 +56,7 @@ FONTS = {
 }
 
 SOUNDS = {
-    ['music'] = love.audio.newSource('sounds/music.mp3', 'static'),
+    ['intro'] = love.audio.newSource('sounds/music.mp3', 'static'),
+    ['game-over'] = love.audio.newSource('sounds/game-over.mp3', 'static'),
+    ['game-won'] = love.audio.newSource('sounds/game-won.mp3', 'static'),
 }
