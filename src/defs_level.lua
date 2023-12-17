@@ -33,6 +33,23 @@ LEVEL_DEFS = {
           -DDDDDDDD-P-DDDDDDDD--
         ]],
     },
+    {
+        -- ['background'] = 'background',
+        -- ['music'] = 'music',
+        ['map'] = [[
+          ---------------------E
+          RRRRRRRRRRRRRRRRRRRRR-
+          D-D-D-D-D-D-D-D-D-D-D-
+          -RRRRRRRRRRRRRRRRRRRRR
+          -D-D-D-D-D-D-D-D-D-D-D
+          RRRRRRRRRRRRRRRRRRRRR-
+          D-D-D-D-D-D-D-D-D-D-D-
+          -RRRRRRRRRRRRRRRRRRRRR
+          -D-D-D-D-D-D-D-D-D-D-D
+          RRRRRRRRRRRRRRRRRRRRR-
+          P-D-D-D-D-D-D-D-D-D-D-
+        ]],
+    },
     --{
     --    -- ['background'] = 'background',
     --    -- ['music'] = 'music',
