@@ -43,18 +43,11 @@ end
 
 function MapTile:render()
     Entity.render(self)
-    -- Debug: Draw the tile coordinates and tile.dy
-    -- Save the current color
-    -- r, g, b, a = love.graphics.getColor()
-    -- love.graphics.push()
-    -- -- Scale down to make font smaller (but still crisp)
-    -- love.graphics.scale(0.5, 0.5)
-    -- love.graphics.setFont(FONTS['small'])
-    -- love.graphics.setColor(0, 1, 0, 1)
-    -- love.graphics.print(self.x .. ',' .. self.y, self.x*2, self.y*2)
-    -- love.graphics.print(self.dy, self.x*2, self.y*2 + 10)
-    -- love.graphics.pop()
-    -- love.graphics.setColor(r, g, b ,a)
+    -- -- Debug: Draw the tile coordinates and tile.dy
+    -- text = self.x .. ',' .. self.y
+    -- color = {0, 1, 0, 1}
+    -- scale = 0.5
+    -- drawText(text, FONTS['small'], self.x, self.y, color, scale)
 end
 
 --[[

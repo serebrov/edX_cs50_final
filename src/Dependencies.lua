@@ -11,6 +11,7 @@ require 'src/constants'
 require 'src/defs_level'
 require 'src/defs_entity'
 
+require 'src/Utils'
 require 'src/StateMachine'
 require 'src/states/BaseState'
 
