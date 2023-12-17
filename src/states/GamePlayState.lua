@@ -1,7 +1,8 @@
 GamePlayState = Class{__includes = BaseState}
 
 function GamePlayState:init()
-    self.level = Level(LEVEL_DEFS['level1'], self)
+    self.level_number = 1
+    self.level = Level(LEVEL_DEFS[self.level_number], self)
 end
 
 function GamePlayState:update(dt)
@@ -33,6 +34,10 @@ function GamePlayState:gameOver()
 end
 
 function GamePlayState:nextLevel()
-    gStateMachine:change('game-won')
-    --self.level = Level(LEVEL_DEFS['level2'], self)
+    if self.level_number < #LEVEL_DEFS then
+        self.level_number = self.level_number + 1
+        self.level = Level(LEVEL_DEFS[self.level_number], self)
+    else
+        gStateMachine:change('game-won')
+    end
 end
