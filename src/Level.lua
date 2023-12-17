@@ -115,8 +115,8 @@ function Level:update(dt)
                 if tile_next.isEmpty() then
                     tile.dy = tile.dy + dt * TILE_FALL_SPEED
                     if tile_next == self:tile_at(self.player.x, self.player.y) then
-                        -- If the player is directly under the falling tile,
-                        -- stop the fall.
+                        -- If the player is directly under the about-to-be
+                        -- falling tile, stop the fall.
                         if not tile.falling then
                             tile.dy = 0
                         end
@@ -137,6 +137,7 @@ function Level:update(dt)
                     end
                 else
                     tile.dy = 0
+                    tile.falling = false
                 end
             end
         end
@@ -151,9 +152,6 @@ function Level:render()
         end
     end
     self.player:render()
-    -- for i = 1, #self.map do
-    --     self.map[y]:render()
-    -- end
 end
 
 function Level:tile_at(x, y)
