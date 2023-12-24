@@ -36,6 +36,11 @@ function GamePlayState:render()
     color = {0, 1, 0, 1}
     scale = 0.3
     drawText(text, FONTS['large'], 10, VIRTUAL_HEIGHT - 10, color, scale)
+
+    drawText(
+        "[Arrows]: move, [Esc] :quit",
+        FONTS['large'], 150, VIRTUAL_HEIGHT - 10, color, 0.25
+    )
 end
 
 function GamePlayState:gameOver()

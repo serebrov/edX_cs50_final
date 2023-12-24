@@ -9,7 +9,10 @@ function GameStartState:update(dt)
         love.event.quit()
     end
 
-    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+    if love.keyboard.wasPressed('enter')
+        or love.keyboard.wasPressed('return')
+        or love.keyboard.wasPressed('space')
+    then
         gStateMachine:change('game-play')
     end
 end
@@ -51,6 +54,12 @@ function GameStartState:render()
     -- Draw the text in neon green on top of the shadow
     love.graphics.setColor(labelColor)
     love.graphics.printf('Press Enter', 0, VIRTUAL_HEIGHT / 2 + 64, VIRTUAL_WIDTH, 'center')
+
+    color = {0, 1, 0, 1}
+    drawText(
+        "[Space]: start, [Esc] :quit",
+        FONTS['large'], 5, VIRTUAL_HEIGHT/2 + 95, color, 0.25
+    )
 
     -- love.graphics.draw(TEXTURES['background'], 0, 0, 0, 
     --     VIRTUAL_WIDTH / TEXTURES['background']:getWidth(),
