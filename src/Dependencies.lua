@@ -16,8 +16,9 @@ require 'src/StateMachine'
 require 'src/states/BaseState'
 
 require 'src/Resources'
-require 'src/Level'
 require 'src/Animation'
+
+require 'src/Level'
 require 'src/Entity'
 require 'src/EntityWithState'
 require 'src/Tile'
@@ -31,3 +32,5 @@ require 'src/states/GameStartState'
 require 'src/states/GamePlayState'
 require 'src/states/GameWonState'
 require 'src/states/GameOverState'
+
+require 'src/Game'

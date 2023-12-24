@@ -30,15 +30,3 @@ function drawText(text, x, y, parameters)
     love.graphics.setColor(old_r, old_g, old_b, old_a)
     love.graphics.pop()
 end
-
-function changeMusic(audio)
-    if STATE['music'] then
-        STATE['music']:stop()
-    end
-    if not audio then
-        return
-    end
-    STATE['music'] = audio
-    STATE['music']:setLooping(true)
-    STATE['music']:play()
-end

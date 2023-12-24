@@ -1,7 +1,8 @@
 GameWonState = Class{__includes = BaseState}
 
-function GameWonState:init()
-    changeMusic(SOUNDS['game-won'])
+function GameWonState:init(game)
+    self.game = game
+    self.game:change_music(SOUNDS['game-won'])
 end
 
 function GameWonState:update(dt)
@@ -13,7 +14,7 @@ function GameWonState:update(dt)
         or love.keyboard.wasPressed('return')
         or love.keyboard.wasPressed('space')
     then
-        gStateMachine:change('game-start')
+        self.game:change_state('game-start')
     end
 end
 
