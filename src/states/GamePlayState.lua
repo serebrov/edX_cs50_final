@@ -15,10 +15,6 @@ end
 
 function GamePlayState:update(dt)
     if love.keyboard.wasPressed('escape') then
-        love.event.quit()
-    end
-
-    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         gStateMachine:change('game-over')
     end
     self.level:update(dt)
@@ -33,13 +29,22 @@ function GamePlayState:render()
     -- TODO: diamond is not visible, need to find a font that has it
     -- text = '💎 ' .. self.level.player.diamonds
     text = 'Diamonds: ' .. self.level.player.diamonds .. ' of ' .. self.level.diamonds
-    color = {0, 1, 0, 1}
-    scale = 0.3
-    drawText(text, FONTS['large'], 10, VIRTUAL_HEIGHT - 10, color, scale)
+    drawText(
+        text, 10, VIRTUAL_HEIGHT - 10,
+        {
+            font = 'large',
+            scale = 0.3,
+            color = COLOR_GREEN,
+        }
+    )
 
     drawText(
-        "[Arrows]: move, [Esc] :quit",
-        FONTS['large'], 150, VIRTUAL_HEIGHT - 10, color, 0.25
+        '[Arrows] move, [Esc] quit', 150, VIRTUAL_HEIGHT - 10,
+        {
+            font = 'large',
+            scale = 0.25,
+            color = COLOR_GREEN,
+        }
     )
 end
 
