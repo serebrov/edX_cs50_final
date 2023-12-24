@@ -1,8 +1,10 @@
-## The game
+# The game
 
-The game is similar to boulder dash ([https://boulder-dash.com/](https://boulder-dash.com/)).
+The game is the final project for the [EdX course](https://www.edx.org/learn/game-development/harvard-university-cs50-s-introduction-to-game-development).
 
-The main character goes through levels where each level is a rectangular area filled with ground, rocks, diamonds and empty spaces.
+The implementation is based on [Lua examples](https://github.com/serebrov/edX_cs50_love2d) from the course.
+
+The game is similar to boulder dash ([https://boulder-dash.com/](https://boulder-dash.com/)) where the main character goes through levels, collects dimonds and avoids being smashed by the rocks. Each level is a rectangular area filled with ground, rocks, diamonds and empty spaces.
 
 Rules are:
 
@@ -25,7 +27,7 @@ First implementation:
 * The character can collect diamonds
 * Exit from the level activates once all dimonds are collected
 
-## Engine selection: Unity or Love2d
+# Engine selection: Unity or Love2d
 
 I prefer using Love2d for this project since we have good set of examples from the course and it should not be too difficult to implement the game with Love while it might still be useful to have a hands-on experience with Love on a larger project.
 
@@ -39,7 +41,21 @@ Similarities with other Love2d course games:
 * Mario: we can collect coins, monsters deduct lives
 * Match3: diamonds can fall down
 
-## Technical spec
+# Demo
+
+Video: https://youtu.be/sqnoGFtfRk4
+
+Key points for the demo:
+* [0:00] Game start state
+* [0:25] Game play, level 1
+  * [1:13] Level 2
+  * [1:52] Level 3
+* [3:09] Game won
+* [3:30] Diamond falls on the character and game over state
+* [3:42] Rock falls on the character and game over state
+* [3:45] Game over and restart
+
+# Technical spec
 
 Game states:
 
@@ -88,8 +104,7 @@ Controls:
 * Space key: start the game
 * Esc: quit the game
 
-
-## Implementation plan
+# Implementation plan
 
 ### Project initialization
 
@@ -156,7 +171,6 @@ Keyboard controls:
 * Arrow keys to control the character
 * Esc to to go to the game over state from play or quit the game from other states (start, game over, game won)
 
-
 # Code structure
 
 Utility modules:
@@ -179,12 +193,13 @@ Game implementation:
 * Level.lua - main game logic, parses level definition and manages updates and rendering
 * Entity.lua - base class for movable entities (currently only player)
   * EntityWithState.lua - entity with state machine
-* Player.lua - the game characher
+* Player.lua - the game characer, extends `EntityWithState`
 * Tile.lua - base tile class, map tiles, exit tile, "no tile" (empty space)
 * states/ folder - game and player states
 
 # Possible future improvements
 
+* Add sounds for events (pickup the diamond, killed by the rock or dimond, exit level)
 * Better graphics and sound
 * The player can move rocks
 * Extra life is given when collected N diamonds
@@ -195,4 +210,3 @@ Game implementation:
 * Add scoreboard state, allow entering name for the scoreboard
 * Try automatic level generation, use GPT to generate more levels (describe the idea, probably use some JSON representation for the level, give examples, ask to generate more levels)
 * If we have more levels: consider increasing number of lives.
-
