@@ -23,20 +23,7 @@ First implementation:
 * The character has 1 life
 * The character can dig the ground
 * The character can collect diamonds
-
-Testing and improvements:
-
-* Test and adjust rules if necessary
-* The player can move rocks
-* Extra life is given when collected N diamonds
-* Two or more rocks or diamonds cannot sand on top of each other unless supported by ground, they start rolling and falling
-* Add enemies that live in empty spaces
-  * The enemy circles around the available empty space
-* Add a timer to pass through the maze
-* Add scoreboard state, allow entering name for the scoreboard
-* See if it is easy enough to add more levels
-    * Possible options: design more levels manually, implement automatic generation, use GPT to generate more levels (describe the idea, probably use some JSON representation for the level, give examples, ask to generate more levels)
-* If we have more levels: consider increasing number of lives.
+* Exit from the level activates once all dimonds are collected
 
 ## Engine selection: Unity or Love2d
 
@@ -65,42 +52,15 @@ Game objects:
 
 * Level
   * Has a map with tiles: empty, ground, rock, diamond, exit
-* Base entity
-* Character
-
-Behaviours:
-
-* Gravity - both rock and diamond have this, can fall down if there is space
-* Consumable - diamonds are consumable
+* Tile: represents object on the map
+* Base entity: rendered on the map, can move
+* Player: entity with walk and idle states, handle collisions with rocks and diamonds
 
 Levels should be data-driven, with map defined as Lua table (potentially could be read from the file, maybe in some structured format like JSON).
 
 Entities (diamonds, rocks) have fixed characteristics and behavior, so no need to make them configurable on the map, we can just specify where to place them.
 
-The data can look like this:
-
-```
-[ 
-  [ "-", " ", "-", "R", " ", "R", "R", "-", "-", "R", "-", "D", "-", "-", "D" ],
-  [ "-", " ", "D", "-", " ", "-", "R", "D", "R", "R", "-", "-", "-", "R", "-" ],
-  [ "-", " ", "R", "-", "-", "R", "-", "D", "R", "-", "-", "R", "-", "R", "-" ],
-  [ "-", "-", "R", "D", "-", "-", "R", "-", "R", "-", "R", "R", "-", "R", "E" ],
-  [ "-", "-", "R", "-", "D", "-", "R", "-", "-", "-", "-", "R", "-", "-", "-" ],
-  [ "-", "-", "R", "-", "D", "-", "R", " ", " ", "R", " ", "-", " ", " ", "R" ],
-  [ "-", "-", "R", "-", "D", "D", "-", "-", "-", "R", "-", "-", " ", "-", "R" ],
-]
-```
-
-Were:
-
-* "-" - ground tile
-* " " - empty tile
-* "R" - rock
-* "D" - diamond
-* "E" - exit from the level
-
-We can also consider using more compact text format, something like this:
-
+The level map can be defined like this:
 
 ```
   - -R RR--R-D--D
@@ -112,27 +72,24 @@ We can also consider using more compact text format, something like this:
   --R-DD---R-- -R
 ```
 
+Were:
 
-It is also more readable: we can see on the example above that there are probably too many rocks on the level and it might be hard to navigate. This is less obvious in JSON representation.
+* "-" - ground tile
+* " " - empty tile
+* "R" - rock
+* "D" - diamond
+* "E" - exit from the level
 
-Related: [https://gamedev.stackexchange.com/a/139504](https://gamedev.stackexchange.com/a/139504)	
+Related: [https://gamedev.stackexchange.com/a/139504](https://gamedev.stackexchange.com/a/139504).
 
-Controls: the character should be controlled with arrow keys. Use space key to start the game.
+Controls:
 
-Assets:
+* Arrow keys: move the character
+* Space key: start the game
+* Esc: quit the game
 
-* Character
-* Tiles: air, ground, rock, diamond
-* Sounds
-  * Start game
-  * Dig the ground
-  * Moving through the empty space (maybe no sound here?)
-  * Falling rock
-  * Consume diamond
-  * Loose life
-  * Background music (maybe, not necessary)
 
-## Implementation
+## Implementation plan
 
 ### Project initialization
 
@@ -180,3 +137,62 @@ If falling diamond or rock collides with the player, the game transfers to the "
 ### End state (win and game over)
 
 Add "you won" and and "gave over" states.
+
+# Current state
+
+The implementation plan above is completed, we have:
+
+* Four game states: start, play, you won, game over
+* The map with text-based level definition, it is quite easy to add new levels
+* Map tiles: ground, rock, diamond, exit, wall
+* Entity class and player (the only entity at the moment)
+* Player can "dig" the ground, collect diamonds and interact with an active exit tile to move to the next level
+* Exit tile activates only after all diamonds are collected
+* There is a diamond counter at the bottom of the screen
+* Rocks and diamonds can fall down and kill the player
+
+Keyboard controls:
+* Space or Enter to start the game
+* Arrow keys to control the character
+* Esc to to go to the game over state from play or quit the game from other states (start, game over, game won)
+
+
+# Code structure
+
+Utility modules:
+* Animation.lua - generic animation handling
+* StateMachine.lua - state machine implementation
+* Utils.lua - utility functions, currently `drawText`
+
+Game setup:
+* Dependencies.lua - `requre` statements to include all sources
+* Resources.lua - definitions of textures, frames, fonts and sounds
+* constants.lua - constants (width/height, speed settings, colors)
+
+Game configuration:
+* defs_entity.lua - entity configurations (player, tiles)
+* defs_level.lua - level definitions
+
+Game implementation:
+
+* Game.lua - high-level game logic, game state machine and sound
+* Level.lua - main game logic, parses level definition and manages updates and rendering
+* Entity.lua - base class for movable entities (currently only player)
+  * EntityWithState.lua - entity with state machine
+* Player.lua - the game characher
+* Tile.lua - base tile class, map tiles, exit tile, "no tile" (empty space)
+* states/ folder - game and player states
+
+# Possible future improvements
+
+* Better graphics and sound
+* The player can move rocks
+* Extra life is given when collected N diamonds
+* Two or more rocks or diamonds cannot sand on top of each other unless supported by ground, they start rolling and falling
+* Add enemies that live in empty spaces
+  * The enemy circles around the available empty space
+* Add a timer to pass through the maze
+* Add scoreboard state, allow entering name for the scoreboard
+* Try automatic level generation, use GPT to generate more levels (describe the idea, probably use some JSON representation for the level, give examples, ask to generate more levels)
+* If we have more levels: consider increasing number of lives.
+
